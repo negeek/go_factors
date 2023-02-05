@@ -4,13 +4,13 @@ import (
 		"errors"
 )
 
-func MathFactors(number int)([]int, error){
-	factors:=[]int
+func MathFactors(number float64)([]float64, error){
+	factors:=[]float64
 	latest_index=0
 	for num:=1; i< math.Sqrt(number)+1; i++{
-		if number%num==0{
+		if math.Mod(number,num)==0{
 			append(factors,num)
-			latest_index+=1
+			latest_index++
 		}
 		if math.Floor(number,num) != factors[latest_index]{
 			append(factors,math.Floor(number,num))
