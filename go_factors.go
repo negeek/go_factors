@@ -1,24 +1,26 @@
 package go_factors
 import (
 		"math"
-		"errors"
 )
 
-func MathFactors(number float64)([]float64, error){
-	factors:=[]float64
-	latest_index=0
-	for num:=1; i< math.Sqrt(number)+1; i++{
-		if math.Mod(number,num)==0{
-			append(factors,num)
+func MathFactors(number int)([]int, error){
+	factors := make([]int, number) 
+	latest_index:=0
+	for num:=1; num < int(math.Sqrt(float64(number))+1); num++{
+		if number%num==0{
+			factors[latest_index]=num
 			latest_index++
-		}
-		if math.Floor(number,num) != factors[latest_index]{
-			append(factors,math.Floor(number,num))
-		}else{
-			
-			return factors, nil
-		}
+		
+			other_num:= int(math.Floor(float64(number)/float64(num)))
+			if other_num != factors[latest_index]{
+				factors[latest_index]=other_num
+				latest_index++
+			}else{
 
-		return factors, nil
+				return factors[:latest_index], nil
+			}
+		}
+		
 	}
+	return factors[:latest_index], nil
 }
