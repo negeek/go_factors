@@ -121,15 +121,19 @@ func OddFactors(number int)[]int{
 
 func PrimeFactors(number int)[]int{
 	factors:=MathFactors(number)
-	prime_factor_space=factors[2:]
+	prime_factor_space:=factors[2:]
 	if len(factors)<3{
-        return factors[1]
+		result:=make([]int,1)
+		result[0]=factors[len(factors)-1]
+        return result
 	}
 	if  len(prime_factor_space)<2{
-		return factors[0]
+		result:=make([]int,1)
+		result[0]=factors[len(factors)-1]
+		return result
 	}
 	num:=prime_factor_space[0]
-	var memory map[int]int
+	memory:=make(map[int]int) 
 	next_num:=make([]int,number)
 	next_num_index:=0
 
@@ -149,7 +153,7 @@ func PrimeFactors(number int)[]int{
 				if prime_factor_space[i]%num==0{
 					prime_factor_space[i]=0
 				}else{
-					there, ok= memory[prime_factor_space[i]]
+					_, ok:= memory[prime_factor_space[i]]
 					if ok==false{
 						memory[prime_factor_space[i]]=1
 						next_num[next_num_index]=prime_factor_space[i]
@@ -166,5 +170,5 @@ func PrimeFactors(number int)[]int{
 		}
 		
 	}
-	
+	return prime_factor_space
 }
