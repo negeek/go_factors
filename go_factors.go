@@ -134,7 +134,7 @@ func PrimeFactors(number int)[]int{
 	}
 	num:=prime_factor_space[0]
 	memory:=make(map[int]int) 
-	next_num:=make([]int,number)
+	next_num:=make([]int,len(factors))
 	next_num_index:=0
 
 	if num >2{
@@ -147,16 +147,21 @@ func PrimeFactors(number int)[]int{
 		next_num_index++
         memory[num+1]=1
 	}
+	num_of_zeros:=0
 	for{
 		for i:=1; i < len(prime_factor_space); i++{
 			if num!=prime_factor_space[i]{
 				if prime_factor_space[i]%num==0{
+					if prime_factor_space[i]!=0{
+						num_of_zeros++
+					}
 					prime_factor_space[i]=0
 				}else{
 					_, ok:= memory[prime_factor_space[i]]
 					if ok==false{
 						memory[prime_factor_space[i]]=1
 						next_num[next_num_index]=prime_factor_space[i]
+						next_num_index++
 					}
 				}
 			}
@@ -170,5 +175,13 @@ func PrimeFactors(number int)[]int{
 		}
 		
 	}
-	return prime_factor_space
+	result:=make([]int,len(prime_factor_space)-num_of_zeros)
+	idx:=0
+	for i:=0; i < len(prime_factor_space); i++{
+		if prime_factor_space[i]!=0{
+			result[idx]=prime_factor_space[i]
+			idx++
+		}	
+	}
+	return result
 }
